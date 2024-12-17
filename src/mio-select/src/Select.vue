@@ -140,9 +140,9 @@ onMounted(() => {
     font-weight: 400;
     line-height: 32PX;
     background-color: rgba(255, 255, 255, 1);
-    border: 1PX solid rgba(45, 45, 45, 0.2);
+    border: 1PX solid rgba(46, 46, 46, 0.2);
     border-radius: 4PX;
-    box-shadow: 0 0 2PX rgba(45, 45, 45, 0.2);
+    box-shadow: 0 0 2PX rgba(46, 46, 46, 0.2);
 
     &:hover {
         cursor: pointer;
@@ -204,7 +204,7 @@ onMounted(() => {
         opacity: 0.5;
         height: auto;
         background-color: rgba(255, 255, 255, 1);
-        box-shadow: 0 0 6PX rgba(45, 45, 45, 0.25);
+        box-shadow: 0 0 6PX rgba(46, 46, 46, 0.25);
         -ms-overflow-style: none;
         scrollbar-width: none;
         transition-duration: 0.25s;

@@ -8,6 +8,7 @@ export class Utils {
     GenerateUUID;
     GetViewportSize;
     GetNodePosition;
+
     General = {
         GenerateUUID: null,
         GetViewportSize: null,

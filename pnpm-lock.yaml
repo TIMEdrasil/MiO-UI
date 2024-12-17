@@ -10,10 +10,10 @@ importers:
     dependencies:
       vue:
         specifier: ^3.4.31
-        version: 3.4.34
+        version: 3.4.34(typescript@5.7.2)
       vue-router:
         specifier: ^4.4.3
-        version: 4.4.3(vue@3.4.34)
+        version: 4.4.3(vue@3.4.34(typescript@5.7.2))
     devDependencies:
       '@babel/core':
         specifier: ^7.24.9
@@ -1722,6 +1722,11 @@ packages:
     resolution: {integrity: sha512-Ne+eE4r0/iWnpAxD852z3A+N0Bt5RN//NjJwRd2VFHEmrywxf5vsZlh4R6lixl6B+wz/8d+maTSAkN1FIkI3LQ==}
     engines: {node: '>=10'}
 
+  typescript@5.7.2:
+    resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
   unicode-canonical-property-names-ecmascript@2.0.0:
     resolution: {integrity: sha512-yY5PpDlfVIU5+y/BSCxAJRBIS1Zc2dDG3Ujq+sR0U+JjUevW2JhocOF+soROYDSaAezOzOKuyyixhD6mBknSmQ==}
     engines: {node: '>=4'}
@@ -2867,11 +2872,11 @@ snapshots:
       '@vue/shared': 3.4.34
       csstype: 3.1.3
 
-  '@vue/server-renderer@3.4.34(vue@3.4.34)':
+  '@vue/server-renderer@3.4.34(vue@3.4.34(typescript@5.7.2))':
     dependencies:
       '@vue/compiler-ssr': 3.4.34
       '@vue/shared': 3.4.34
-      vue: 3.4.34
+      vue: 3.4.34(typescript@5.7.2)
 
   '@vue/shared@3.4.34': {}
 
@@ -3674,6 +3679,9 @@ snapshots:
 
   type-fest@0.20.2: {}
 
+  typescript@5.7.2:
+    optional: true
+
   unicode-canonical-property-names-ecmascript@2.0.0: {}
 
   unicode-match-property-ecmascript@2.0.0:
@@ -3710,18 +3718,20 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vue-router@4.4.3(vue@3.4.34):
+  vue-router@4.4.3(vue@3.4.34(typescript@5.7.2)):
     dependencies:
       '@vue/devtools-api': 6.6.3
-      vue: 3.4.34
+      vue: 3.4.34(typescript@5.7.2)
 
-  vue@3.4.34:
+  vue@3.4.34(typescript@5.7.2):
     dependencies:
       '@vue/compiler-dom': 3.4.34
       '@vue/compiler-sfc': 3.4.34
       '@vue/runtime-dom': 3.4.34
-      '@vue/server-renderer': 3.4.34(vue@3.4.34)
+      '@vue/server-renderer': 3.4.34(vue@3.4.34(typescript@5.7.2))
       '@vue/shared': 3.4.34
+    optionalDependencies:
+      typescript: 5.7.2
 
   which@2.0.2:
     dependencies:

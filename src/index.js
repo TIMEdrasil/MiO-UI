@@ -1,6 +1,7 @@
 import MiOLayouts from "./mio-layout";
 import MiOMenus from "./mio-menus";
 import MiOBreadcrumbs from "./mio-breadcrumbs";
+import MiOInput from "./mio-input";
 import MiOSelect from "./mio-select";
 import MiOList from "./mio-list";
 import MiOCard from "./mio-card";
@@ -17,6 +18,7 @@ const MiOUI = {
     MiOLayouts,
     MiOMenus,
     MiOBreadcrumbs,
+    MiOInput,
     MiOSelect,
     MiOList,
     MiOCard,
@@ -36,6 +38,7 @@ window.MiOUI = {
     MiOLayouts,
     MiOMenus,
     MiOBreadcrumbs,
+    MiOInput,
     MiOSelect,
     MiOList,
     MiOCard,
