@@ -5,7 +5,7 @@ export default {
 </script>
 
 <script setup>
-import { ref, inject, watch, onMounted } from "vue";
+import { ref, inject, watch, onMounted, onUnmounted } from "vue";
 
 // Local Variables
 const uuid = inject("MiO-Input-UUID");
@@ -26,36 +26,86 @@ function handleEnter(event) {
     console.log("Enter: ", event)
 }
 
-function setVisible() {
-    if (!inputPlaceholder.value) {
-        if (!inputValue.value.value) {
-            visibleConfigs.value.actions = false;
-            visibleConfigs.value.placeholder = false;
-        } else {
+function initialize() {
+    switch (inputValue.value.value) {
+        case null:
+        case undefined:
+        case "":
+            if (inputPlaceholder.value) {
+                visibleConfigs.value.label = false;
+                visibleConfigs.value.actions = false;
+                visibleConfigs.value.placeholder = true;
+            } else {
+                visibleConfigs.value.label = false;
+                visibleConfigs.value.actions = false;
+                visibleConfigs.value.placeholder = false;
+            }
+            break
+        default:
+            visibleConfigs.value.label = true;
             visibleConfigs.value.actions = true;
             visibleConfigs.value.placeholder = false;
+    }
+}
+
+function handleMouseenter() {
+    visibleConfigs.value.label = true;
+    visibleConfigs.value.actions = true;
+
+    if (inputPlaceholder.value) {
+        visibleConfigs.value.placeholder = false;
+    }
+}
+
+function handleMouseleave() {
+    if (!inputValue.value.value) {
+        visibleConfigs.value.label = false;
+        visibleConfigs.value.actions = false;
+
+        if (inputPlaceholder.value) {
+            visibleConfigs.value.placeholder = true;
         }
     } else {
-        if (!inputValue.value.value) {
-            visibleConfigs.value.actions = false;
-            visibleConfigs.value.placeholder = true;
-        } else {
-            visibleConfigs.value.actions = true;
-            visibleConfigs.value.placeholder = true;
+        visibleConfigs.value.label = true;
+        visibleConfigs.value.actions = true;
+    }
+}
+
+function handleClick(event) {
+    const nodeInput = event.target
+    if (nodeInput) {
+        const nodeId = nodeInput.id;
+
+        if (!nodeId.includes(uuid)) {
+            initialize();
         }
     }
 }
 
+// watch(() => inputValue.value.value, (newValue) => {
+//     if (!newValue) {
+//         visibleConfigs.value.actions = false;
+//     } else {
+//         visibleConfigs.value.placeholder = false;
+//     }
+// }, { deep: true, immediate: true });
+
 onMounted(() => {
-    setVisible();
+    initialize();
+
+    window.addEventListener("click", handleClick.bind(this));
+})
+
+onUnmounted(() => {
+    window.removeEventListener("click", handleClick.bind(this));
 })
 </script>
 
 <template>
-    <div class="mio-input" contenteditable="true" @input="handleInput" @keydown.enter.prevent="handleEnter">
-        <div class="mio-input-label">{{ inputLabel }}</div>
-        <div :class="visibleConfigs.actions ? 'active' : ''" class="mio-input-actions">{{ inputValue.value }}</div>
-        <div :class="visibleConfigs.placeholder ? 'active' : ''" class="mio-input-placeholder">{{ inputPlaceholder }}</div>
+    <div class="mio-input" @mouseenter="handleMouseenter" @mouseleave="handleMouseleave" @focusout="initialize">
+        <div :id="'MiO-Input-Label-' + uuid" :class="visibleConfigs.label ? 'active' : inputPlaceholder ? 'placeholder' : ''" class="mio-input-label">{{ inputLabel }}</div>
+        <div :id="'MiO-Input-Actions-' + uuid" :class="visibleConfigs.actions ? 'active' : ''" class="mio-input-actions" contenteditable="true" @input="handleInput" @keydown.enter.prevent="handleEnter">{{ inputValue.value }}</div>
+        <div :id="'MiO-Input-Placeholder-' + uuid" :class="visibleConfigs.placeholder ? 'active' : ''" class="mio-input-placeholder">{{ inputPlaceholder }}</div>
     </div>
 </template>
 
@@ -73,10 +123,14 @@ onMounted(() => {
     align-items: flex-start;
 
     .mio-input-label {
-        flex: 0;
-        width: 66PX;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         background-color: transparent;
         pointer-events: none;
+        padding: 0 10PX;
         box-sizing: border-box;
         display: flex;
         justify-content: flex-start;
@@ -84,13 +138,31 @@ onMounted(() => {
         color: rgba(46, 46, 46, 0.8);
         font-size: 14PX;
         font-weight: 600;
+        transition-property: all;
+        transition-timing-function: ease-in-out;
+        transition-duration: 0.5s;
+
+        &.active {
+            position: absolute;
+            top: -25%;
+            left: 0;
+            color: rgba(46, 46, 46, 0.8);
+            font-size: 14PX;
+            font-weight: 600;
+        }
+
+        &.placeholder {
+            height: 80%;
+        }
     }
 
     .mio-input-actions {
         all: unset;
         flex: 0;
-        width: 100%;
-        padding: 0 10PX;
+        height: 0;
+        width: 0;
+        padding: 0;
+        margin: 0;
         box-sizing: border-box;
         display: flex;
         justify-content: flex-start;
@@ -100,17 +172,26 @@ onMounted(() => {
         font-weight: 400;
         word-wrap: break-word;
         white-space: normal;
+        opacity: 0;
+        transition-property: opacity;
+        transition-timing-function: ease-in-out;
+        transition-duration: 0.5s;
 
         &.active {
-            flex: 1;
+            flex: 0 0 50%;
+            width: 100%;
+            padding: 0 10PX;
+            opacity: 1;
         }
     }
 
     .mio-input-placeholder {
         flex: 0;
-        width: 100%;
+        height: 0;
+        width: 0;
         background-color: transparent;
         pointer-events: none;
+        padding: 0 10PX;
         box-sizing: border-box;
         display: flex;
         justify-content: flex-start;
@@ -121,9 +202,15 @@ onMounted(() => {
         color: rgba(46, 46, 46, 0.6);
         font-size: 14PX;
         font-weight: 600;
+        opacity: 0;
+        transition-property: opacity;
+        transition-timing-function: ease-in-out;
+        transition-duration: 0.5s;
 
         &.active {
-            flex: 1;
+            flex: 0 0 50%;
+            width: 100%;
+            opacity: 1;
         }
     }
 }
