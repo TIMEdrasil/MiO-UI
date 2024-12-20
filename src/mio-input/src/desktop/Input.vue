@@ -23,7 +23,7 @@ function handleInput(event) {
 }
 
 function handleEnter(event) {
-    console.log("Enter: ", event)
+    // console.log("Enter: ", event)
 }
 
 function initialize() {
@@ -52,9 +52,10 @@ function handleMouseenter() {
     visibleConfigs.value.label = true;
     visibleConfigs.value.actions = true;
 
-    if (inputPlaceholder.value) {
-        visibleConfigs.value.placeholder = false;
-    }
+    visibleConfigs.value.placeholder = false;
+    // if (inputPlaceholder.value) {
+    //     visibleConfigs.value.placeholder = false;
+    // }
 }
 
 function handleMouseleave() {
@@ -64,10 +65,13 @@ function handleMouseleave() {
 
         if (inputPlaceholder.value) {
             visibleConfigs.value.placeholder = true;
+        } else {
+            visibleConfigs.value.placeholder = false;
         }
     } else {
         visibleConfigs.value.label = true;
         visibleConfigs.value.actions = true;
+        visibleConfigs.value.placeholder = false;
     }
 }
 

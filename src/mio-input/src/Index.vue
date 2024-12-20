@@ -29,6 +29,10 @@ const Props = defineProps({
     placeholder: {
         type:  [String, null],
         default: null
+    },
+    type: {
+        type: String,
+        default: null
     }
 });
 const Emits = defineEmits(["update:modelValue"]);
