@@ -1,6 +1,6 @@
 node_modules
 static/dist
-examples/*/dist
+showcase/*/dist
 **/*.map
 
 # Editor directories and files
