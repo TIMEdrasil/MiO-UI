@@ -13,7 +13,11 @@ let nodeLabel = null;
 let nodeActions = null;
 let nodePlaceholder = null;
 let eventInputClick = null;
+let eventInputMouseenter = null;
+let eventInputMouseleave = null;
 let eventActionsMouseleave = null;
+let eventActionsFocus = null;
+let eventActionsFocusout = null;
 
 const uuid = inject("MiO-Input-UUID");
 const inputValue = inject("MiO-Input-Input_Value");
@@ -35,29 +39,53 @@ function handleEnter(event) {
 }
 
 function initializeInputEvent() {
-    eventInputClick = () => {}
+    eventInputMouseenter = () => {
+        // console.log("Actions | Mouseenter")
+        visibleConfigs.value.label = true;
+        visibleConfigs.value.actions = true;
+        visibleConfigs.value.placeholder = false;
+    }
+    eventInputMouseleave = () => {
+        // console.log("Actions | Mouseleave")
+        initializeVisible();
+    }
+    eventInputClick = (event) => {
+        // console.log("Input | Click")
+        const nodeInput = event.target
+        if (nodeInput) {
+            const nodeId = nodeInput.id;
+
+            if (!nodeId.includes(uuid)) {
+                initializeVisible();
+            }
+        }
+    }
+
+    nodeInput.addEventListener("mouseenter", eventInputMouseenter);
+    nodeInput.addEventListener("mouseleave", eventInputMouseleave);
+    window.addEventListener("click", eventInputClick)
 }
 
 function initializeActionsEvent() {
-    eventActionsMouseleave = () => {
-        console.log("Actions | Mouseleave")
+    eventActionsFocusout = () => {
+        // console.log("Actions | Focusout")
+        initializeVisible();
     }
 
-    nodeActions.addEventListener("mouseleave", eventActionsMouseleave);
+    nodeActions.addEventListener("focusout", eventActionsFocusout);
 }
 
-function initialize() {
-    switch (inputValue.value.value) {
+function initializeVisible() {
+    switch (inputValue.value.value.trim()) {
         case null:
         case undefined:
         case "":
+            visibleConfigs.value.label = false;
+            visibleConfigs.value.actions = false;
+
             if (inputPlaceholder.value) {
-                visibleConfigs.value.label = false;
-                visibleConfigs.value.actions = false;
                 visibleConfigs.value.placeholder = true;
             } else {
-                visibleConfigs.value.label = false;
-                visibleConfigs.value.actions = false;
                 visibleConfigs.value.placeholder = false;
             }
             break
@@ -68,64 +96,29 @@ function initialize() {
     }
 }
 
-function handleMouseenter() {
-    visibleConfigs.value.label = true;
-    visibleConfigs.value.actions = true;
-
-    visibleConfigs.value.placeholder = false;
-    // if (inputPlaceholder.value) {
-    //     visibleConfigs.value.placeholder = false;
-    // }
-}
-
-function handleMouseleave() {
-    if (!inputValue.value.value) {
-        visibleConfigs.value.label = false;
-        visibleConfigs.value.actions = false;
-
-        if (inputPlaceholder.value) {
-            visibleConfigs.value.placeholder = true;
-        } else {
-            visibleConfigs.value.placeholder = false;
-        }
-    } else {
-        visibleConfigs.value.label = true;
-        visibleConfigs.value.actions = true;
-        visibleConfigs.value.placeholder = false;
-    }
-}
-
-function handleClick(event) {
-    const nodeInput = event.target
-    if (nodeInput) {
-        const nodeId = nodeInput.id;
-
-        if (!nodeId.includes(uuid)) {
-            initialize();
-        }
-    }
-}
-
 onMounted(() => {
-    initialize();
-
-    window.addEventListener("click", handleClick.bind(this));
+    initializeVisible();
 
     nodeInput = document.getElementById("MiO-Input-" + uuid);
     nodeLabel = document.getElementById("MiO-Input-Label-" + uuid);
     nodeActions = document.getElementById("MiO-Input-Actions-" + uuid);
     nodePlaceholder = document.getElementById("MiO-Input-Placeholder-" + uuid);
 
-    initializeEvent();
+    initializeInputEvent();
+    initializeActionsEvent();
 })
 
 onUnmounted(() => {
-    window.removeEventListener("click", handleClick.bind(this));
+    nodeInput.removeEventListener("mouseenter", eventInputMouseenter);
+    nodeInput.removeEventListener("mouseleave", eventInputMouseleave);
+    window.removeEventListener("click", eventInputClick)
+
+    nodeActions.removeEventListener("focusout", eventActionsFocusout);
 })
 </script>
 
 <template>
-    <div class="mio-input" @mouseenter="handleMouseenter" @mouseleave="handleMouseleave" @focusout="initialize">
+    <div class="mio-input">
         <div :id="'MiO-Input-Label-' + uuid" :class="visibleConfigs.label ? 'active' : inputPlaceholder ? 'placeholder' : ''" class="mio-input-label">{{ inputLabel }}</div>
         <div :id="'MiO-Input-Actions-' + uuid" :class="visibleConfigs.actions ? 'active' : ''" class="mio-input-actions" contenteditable="true" @input="handleInput" @keydown.enter.prevent="handleEnter">{{ inputValue.value }}</div>
         <div :id="'MiO-Input-Placeholder-' + uuid" :class="visibleConfigs.placeholder ? 'active' : ''" class="mio-input-placeholder">{{ inputPlaceholder }}</div>
