@@ -8,6 +8,13 @@ export default {
 import { ref, inject, watch, onMounted, onUnmounted } from "vue";
 
 // Local Variables
+let nodeInput = null;
+let nodeLabel = null;
+let nodeActions = null;
+let nodePlaceholder = null;
+let eventInputClick = null;
+let eventActionsMouseleave = null;
+
 const uuid = inject("MiO-Input-UUID");
 const inputValue = inject("MiO-Input-Input_Value");
 const inputLabel = inject("MiO-Input-Input_Label");
@@ -18,12 +25,25 @@ const visibleConfigs = ref({
     placeholder: false
 })
 
+
 function handleInput(event) {
     inputValue.value = event.target.innerText;
 }
 
 function handleEnter(event) {
     // console.log("Enter: ", event)
+}
+
+function initializeInputEvent() {
+    eventInputClick = () => {}
+}
+
+function initializeActionsEvent() {
+    eventActionsMouseleave = () => {
+        console.log("Actions | Mouseleave")
+    }
+
+    nodeActions.addEventListener("mouseleave", eventActionsMouseleave);
 }
 
 function initialize() {
@@ -86,18 +106,17 @@ function handleClick(event) {
     }
 }
 
-// watch(() => inputValue.value.value, (newValue) => {
-//     if (!newValue) {
-//         visibleConfigs.value.actions = false;
-//     } else {
-//         visibleConfigs.value.placeholder = false;
-//     }
-// }, { deep: true, immediate: true });
-
 onMounted(() => {
     initialize();
 
     window.addEventListener("click", handleClick.bind(this));
+
+    nodeInput = document.getElementById("MiO-Input-" + uuid);
+    nodeLabel = document.getElementById("MiO-Input-Label-" + uuid);
+    nodeActions = document.getElementById("MiO-Input-Actions-" + uuid);
+    nodePlaceholder = document.getElementById("MiO-Input-Placeholder-" + uuid);
+
+    initializeEvent();
 })
 
 onUnmounted(() => {
