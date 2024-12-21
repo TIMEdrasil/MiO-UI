@@ -15,6 +15,7 @@ let nodePlaceholder = null;
 let eventInputClick = null;
 let eventInputMouseenter = null;
 let eventInputMouseleave = null;
+let eventInputFocusout = null;
 let eventActionsMouseleave = null;
 let eventActionsFocus = null;
 let eventActionsFocusout = null;
@@ -63,7 +64,7 @@ function initializeInputEvent() {
 
     nodeInput.addEventListener("mouseenter", eventInputMouseenter);
     nodeInput.addEventListener("mouseleave", eventInputMouseleave);
-    window.addEventListener("click", eventInputClick)
+    // window.addEventListener("click", eventInputClick)
 }
 
 function initializeActionsEvent() {

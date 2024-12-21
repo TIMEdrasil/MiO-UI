@@ -10,68 +10,68 @@ import Utils from "../../utils/index.js";
 
 const UUID = inject("UUID");
 const slots = useSlots();
-const eventDocumentClick = handleDocumentClick;
+// const eventDocumentClick = handleDocumentClick;
 
-function handleClick() {
-    const _nodeDropdownMenu = document.getElementById("MiO-Dropdown-Menu-" + UUID);
-    const _nodeDropdownTrigger = document.getElementById("MiO-Dropdown-Trigger-" + UUID);
+// function handleClick() {
+//     const _nodeDropdownMenu = document.getElementById("MiO-Dropdown-Menu-" + UUID);
+//     const _nodeDropdownTrigger = document.getElementById("MiO-Dropdown-Trigger-" + UUID);
+//
+//     if (_nodeDropdownMenu && _nodeDropdownTrigger) {
+//         _nodeDropdownMenu.classList.toggle("active");
+//         _nodeDropdownTrigger.classList.toggle("active");
+//
+//         handlePopupDirection();
+//     }
+// }
 
-    if (_nodeDropdownMenu && _nodeDropdownTrigger) {
-        _nodeDropdownMenu.classList.toggle("active");
-        _nodeDropdownTrigger.classList.toggle("active");
+// function handlePopupDirection() {
+//     const _nodeDropdown = document.getElementById("MiO-Dropdown-" + UUID);
+//     const _nodeDropdownMenu = document.getElementById("MiO-Dropdown-Menu-" + UUID);
+//     const _nodeDropdownTrigger = document.getElementById("MiO-Dropdown-Trigger-" + UUID);
+//
+//     if (!_nodeDropdown || !_nodeDropdownMenu || !_nodeDropdownTrigger) {
+//         return false;
+//     } else {
+//         const _dropdownPosition = Utils.General.GetNodePosition(_nodeDropdown);
+//         const dropdownHeight = _nodeDropdown.offsetHeight;
+//
+//         if ((_dropdownPosition.bottom * 0.96) < dropdownHeight) {
+//             _nodeDropdownTrigger.classList.remove("bottom");
+//             _nodeDropdownMenu.classList.remove("bottom");
+//             _nodeDropdownTrigger.classList.add("top");
+//             _nodeDropdownMenu.classList.add("top");
+//         } else {
+//             _nodeDropdownTrigger.classList.remove("top");
+//             _nodeDropdownMenu.classList.remove("top");
+//             _nodeDropdownTrigger.classList.add("bottom");
+//             _nodeDropdownMenu.classList.add("bottom");
+//         }
+//     }
+// }
 
-        handlePopupDirection();
-    }
-}
-
-function handlePopupDirection() {
-    const _nodeDropdown = document.getElementById("MiO-Dropdown-" + UUID);
-    const _nodeDropdownMenu = document.getElementById("MiO-Dropdown-Menu-" + UUID);
-    const _nodeDropdownTrigger = document.getElementById("MiO-Dropdown-Trigger-" + UUID);
-
-    if (!_nodeDropdown || !_nodeDropdownMenu || !_nodeDropdownTrigger) {
-        return false;
-    } else {
-        const _dropdownPosition = Utils.General.GetNodePosition(_nodeDropdown);
-        const dropdownHeight = _nodeDropdown.offsetHeight;
-
-        if ((_dropdownPosition.bottom * 0.96) < dropdownHeight) {
-            _nodeDropdownTrigger.classList.remove("bottom");
-            _nodeDropdownMenu.classList.remove("bottom");
-            _nodeDropdownTrigger.classList.add("top");
-            _nodeDropdownMenu.classList.add("top");
-        } else {
-            _nodeDropdownTrigger.classList.remove("top");
-            _nodeDropdownMenu.classList.remove("top");
-            _nodeDropdownTrigger.classList.add("bottom");
-            _nodeDropdownMenu.classList.add("bottom");
-        }
-    }
-}
-
-function handleDocumentClick(event) {
-    const _target = event.target;
-
-    if (!_target.id.includes(UUID)) {
-        const _nodeDropdownTrigger = document.getElementById("MiO-Dropdown-Trigger-" + UUID);
-        const _nodeDropdownMenu = document.getElementById("MiO-Dropdown-Menu-" + UUID);
-
-        if (_nodeDropdownTrigger && _nodeDropdownMenu) {
-            _nodeDropdownTrigger.classList.remove("active");
-            _nodeDropdownMenu.classList.remove("active");
-        }
-    }
-}
+// function handleDocumentClick(event) {
+//     const _target = event.target;
+//
+//     if (!_target.id.includes(UUID)) {
+//         const _nodeDropdownTrigger = document.getElementById("MiO-Dropdown-Trigger-" + UUID);
+//         const _nodeDropdownMenu = document.getElementById("MiO-Dropdown-Menu-" + UUID);
+//
+//         if (_nodeDropdownTrigger && _nodeDropdownMenu) {
+//             _nodeDropdownTrigger.classList.remove("active");
+//             _nodeDropdownMenu.classList.remove("active");
+//         }
+//     }
+// }
 
 onMounted(() => {
-    document.addEventListener("click", eventDocumentClick);
+    // document.addEventListener("click", eventDocumentClick);
 
-    handlePopupDirection();
+    // handlePopupDirection();
 });
 </script>
 
 <template>
-    <div :id="'MiO-Dropdown-Trigger-' + UUID" class="mio-dropdown-trigger" @click="handleClick">
+    <div :id="'MiO-Dropdown-Trigger-' + UUID" class="mio-dropdown-trigger">
         <div v-if="!slots['icon']" class="mio-dropdown-trigger-label">
             <slot />
         </div>
