@@ -16,4 +16,4 @@ package-lock.json
 # 忽略其他
 .gitignore
 UPDATECATALOG.MD
-README.dev.md
+CONTRIBUTING.md
