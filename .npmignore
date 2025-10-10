@@ -1,6 +1,5 @@
 # 忽略开发相关文件
 .idea/
-showcase/
 src/
 static/
 

@@ -33,6 +33,7 @@
     },
     "files": [
         "build",
+        "showcase",
         "README.md",
         "LICENSE"
     ],
