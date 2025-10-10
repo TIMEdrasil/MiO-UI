@@ -24,13 +24,13 @@
 
 ```bash
 # NPM
-npm install mio-ui
+npm install @timedrasil/mio-ui
 
 # Yarn
-yarn add mio-ui
+yarn add @timedrasil/mio-ui
 
 # PNPM
-pnpm add mio-ui
+pnpm add @timedrasil/mio-ui
 ```
 
 ## 🚀 快速开始
