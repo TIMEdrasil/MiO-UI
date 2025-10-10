@@ -1,0 +1,19 @@
+# 忽略开发相关文件
+.idea/
+showcase/
+src/
+static/
+
+# 忽略配置文件
+.eslintrc.json
+rollup.build.config.js
+rollup.dev.config.js
+
+# 忽略依赖和锁文件
+node_modules/
+pnpm-lock.yaml
+package-lock.json
+
+# 忽略其他
+.gitignore
+UPDATECATALOG.MD
