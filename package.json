@@ -1,6 +1,6 @@
 {
     "name": "@timedrasil/mio-ui",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "A composable UI library for Vue, empowering developers to build their own design systems",
     "author": {
         "name": "TIMEdrasil",
