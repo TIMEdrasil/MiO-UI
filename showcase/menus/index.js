@@ -107,6 +107,7 @@ const app = createApp({
     template: `
         <div style="width: 100%; height: 100%; display: flex;">
             <div style="flex: 0 0 260PX; height: 100%; display: flex; flex-direction: column;">
+                <mio-menus></mio-menus>
                 <mio-menus>
                     <mio-menu-item index="1">
                         <template #icon>&#8452;</template>
